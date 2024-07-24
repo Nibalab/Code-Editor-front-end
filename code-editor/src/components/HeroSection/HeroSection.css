@@ -3,7 +3,7 @@
     color: white;
     padding: 4rem 0;
     text-align: center;
-    min-height: 50vh; /* Make the hero section occupy full viewport height */
+    min-height: 60vh; 
     display: flex;
     align-items: center;
     justify-content: center;
