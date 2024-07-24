@@ -1,38 +1,47 @@
-.App {
-  text-align: center;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #0f0a19; /* Dark background color */
+  color: #dcdcdc; /* Gray text color */
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Ensure all elements have box-sizing border-box */
+*, *::before, *::after {
+  box-sizing: inherit;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Output component specific styles */
+.output-box {
+  height: 75vh;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid;
+  overflow-y: auto;
+  background-color: #1e1e1e;
+  color: #dcdcdc;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Ensures consistent font */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.output-line {
+  margin-bottom: 4px;
 }
 
-.App-link {
-  color: #61dafb;
+.button {
+  background-color: transparent;
+  border: 1px solid #2f855a; /* Green border */
+  color: #2f855a; /* Green text */
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 16px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.button:disabled {
+  cursor: not-allowed;
+  color: #a0aec0; /* Gray color for disabled state */
+  border-color: #a0aec0;
 }
