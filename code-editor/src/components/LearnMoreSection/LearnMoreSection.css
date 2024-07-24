@@ -1,0 +1,47 @@
+.learn-more-section {
+    background-color: #F9F9F9;
+    padding: 4rem 0;
+  }
+  
+  .learn-more-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    color: #333; /* Ensuring the text color is dark for contrast */
+  }
+  
+  .learn-more-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .features-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .feature {
+    flex: 1;
+    max-width: 300px;
+    margin: 1rem;
+    text-align: center;
+  }
+  
+  .feature i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #F04E30; /* Accent color for icons */
+  }
+  
+  .feature h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #1E2A38; /* Dark blue color for feature titles */
+  }
+  
+  .feature p {
+    font-size: 1rem;
+    color: #333; /* Dark grey color for feature descriptions */
+  }
+  
