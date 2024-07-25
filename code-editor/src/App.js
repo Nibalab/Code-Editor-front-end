@@ -6,33 +6,39 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute"; 
-import AdminRoute from "./components/AdminRoute"; // Import the new AdminRoute component
-import AdminPage from "./pages/AdminPage"; // Your admin page component
-import "./App.css"
+import AdminRoute from "./components/AdminRoute"; 
+import AdminPage from "./pages/AdminPage"; 
+import UserDetails from "./pages/UserDetails";
+import "./App.css";
+import axios from 'axios';
 
 function App() {
   const [name, setName] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      const response = await fetch('http://localhost:8000/api/user', {
-        headers: {'Content-Type': 'application/json'},
-        credentials: 'include',
-      });
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/user', {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        });
+        const content = response.data;
+        setName(content.name);
+        setIsAdmin(content.is_admin);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
 
-      const content = await response.json();
-
-      setName(content.name);
-      setIsAdmin(content.is_admin);
-    })();
+    fetchUserData();
   }, [name, isAdmin]);
 
   return (
     <div className="App">
       <BrowserRouter>
-      <NavBar name={name} setName={setName} is_admin={isAdmin} />
-      <Routes>
+        <NavBar name={name} setName={setName} is_admin={isAdmin} />
+        <Routes>
           <Route path="/" element={<Home name={name}/>}/>
           <Route path="/login" element={<Login setName={setName}/>}/>
           <Route path="/register" element={<Register/>}/>
@@ -50,6 +56,16 @@ function App() {
               <PrivateRoute name={name}>
                 <AdminRoute isAdmin={isAdmin}>
                   <AdminPage />
+                </AdminRoute>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users/:id"
+            element={
+              <PrivateRoute name={name}>
+                <AdminRoute isAdmin={isAdmin}>
+                  <UserDetails />
                 </AdminRoute>
               </PrivateRoute>
             }
