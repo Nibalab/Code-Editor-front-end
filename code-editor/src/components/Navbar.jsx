@@ -29,8 +29,13 @@ const NavBar = (props) => {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
                 <li className="nav-item active">
-                    <Link to="/login" className="nav-link" onClick={logout}>Logout</Link>
+                    <Link to="/" className="nav-link" onClick={logout}>Logout</Link>
                 </li>
+                {props.is_admin && (
+                    <li className="nav-item active">
+                        <Link to="/admin" className="nav-link">Admin</Link>
+                    </li>
+                )}
             </ul>
         )
     }
