@@ -1,29 +1,77 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar';
-import Footer from './components/Footer/Footer';
-import LandingPage from '../src/pages/landingPage/LandingPage';
-// import RegistrationPage from '../src/pages/RegistrationPage/RegistrationPage';
-// import ProfilePage from '../src/pages/ProfilePage/ProfilePage';
-// import ProjectsPage from '../src/pages/ProjectPage/ProjectPage';
-// import SearchPage from '../src/pages/SearchPage/SearchPage';
-// import ChatPage from '../src/pages/ChatPage/ChatPage';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CodeEditor from "./components/CodeEditor";
+import NavBar from "./components/Navbar/Navbar";
+import { useEffect, useState } from "react";
+import Register from "./pages/Register";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import PrivateRoute from "./components/PrivateRoute"; 
+import AdminRoute from "./components/AdminRoute"; 
+import AdminPage from "./pages/AdminPage"; 
+import UserDetails from "./pages/UserDetails";
+import "./App.css";
+import axios from 'axios';
 
-const App = () => {
+function App() {
+  const [name, setName] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/user', {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        });
+        const content = response.data;
+        setName(content.name);
+        setIsAdmin(content.is_admin);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, [name, isAdmin]);
+
   return (
     <div className="App">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        {/* <Route path="/register" element={<RegistrationPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/chat" element={<ChatPage />} />
-         */}
-      </Routes>
-      <Footer />
+      <BrowserRouter>
+        <NavBar name={name} setName={setName} is_admin={isAdmin} />
+        <Routes>
+          <Route path="/" element={<Home name={name}/>}/>
+          <Route path="/login" element={<Login setName={setName}/>}/>
+          <Route path="/register" element={<Register/>}/>
+          <Route 
+            path="/editor" 
+            element={
+              <PrivateRoute name={name}>
+                <CodeEditor/>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute name={name}>
+                <AdminRoute isAdmin={isAdmin}>
+                  <AdminPage />
+                </AdminRoute>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users/:id"
+            element={
+              <PrivateRoute name={name}>
+                <AdminRoute isAdmin={isAdmin}>
+                  <UserDetails />
+                </AdminRoute>
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 };

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import { Link } from 'react-router-dom'; // Optional if you want to use Link instead of <a>
 import './HeroSection.css';
+import gsap from "gsap"
 
-const HeroSection = () => {
+const HeroSection = ({ name }) => {
   const heroRef = useRef(null);
   const textRef = useRef(null);
   const ctaRef = useRef(null);
@@ -19,7 +20,7 @@ const HeroSection = () => {
         <h1 ref={textRef}>Welcome to CodeEditor</h1>
         <p>Your interactive code editor and developer community platform. Write, compile, and collaborate with ease.</p>
         <div className="cta-buttons" ref={ctaRef}>
-          <a href="#learn-more" className="btn btn-primary">Get Started</a>
+          <Link to="/editor" className="btn btn-primary">Get Started</Link>
           <a href="#learn-more" className="btn btn-secondary">Learn More</a>
         </div>
       </div>
