@@ -1,13 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import HeroSection from '../components/HeroSection/HeroSection';
+import LearnMoreSection from '../components/LearnMoreSection/LEarnMoreSection';
 
-const Home = (props) => {
-    return (
-        <div>
-            {props.name ? 'Hi ' + props.name : 'You are not logged in'}
-            <Link to={"/editor"}>Start Coding</Link>
-        </div>
-    );
+const Home = ({ name }) => {
+  return (
+    <div>
+      <HeroSection name={name} />
+      <LearnMoreSection />
+      <div>
+        {name ? `Hi ${name}` : 'You are not logged in'}
+      </div>
+    </div>
+  );
 };
 
 export default Home;

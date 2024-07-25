@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CodeEditor from "./components/CodeEditor";
-import NavBar from "./components/Navbar";
+import NavBar from "./components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
