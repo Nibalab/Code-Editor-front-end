@@ -7,6 +7,9 @@ const Home = ({ name }) => {
     <div>
       <HeroSection name={name} />
       <LearnMoreSection />
+      <div>
+        {name ? `Hi ${name}` : 'You are not logged in'}
+      </div>
     </div>
   );
 };
