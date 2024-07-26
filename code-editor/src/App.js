@@ -9,7 +9,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import AdminRoute from "./components/AdminRoute"; // Import the new AdminRoute component
 import AdminPage from "./pages/AdminPage"; // Your admin page component
 import "./App.css"
-
+import UserSearch from "./pages/user-browser-page";
 function App() {
   const [name, setName] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
@@ -36,6 +36,7 @@ function App() {
           <Route path="/" element={<Home name={name}/>}/>
           <Route path="/login" element={<Login setName={setName}/>}/>
           <Route path="/register" element={<Register/>}/>
+          <Route path="/search" element={<UserSearch/>}/>
           <Route 
             path="/editor" 
             element={
