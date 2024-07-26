@@ -1,0 +1,56 @@
+/* src/components/CodeEditor/CodeEditor.css */
+
+.code-editor-wrapper {
+    min-height: 100vh;
+    background-color: #0f0a19;
+    color: #dcdcdc;
+    padding: 32px 24px;
+  }
+  
+  .code-editor-container {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .editor-container {
+    width: 50%;
+  }
+  
+  .input-section {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .input-title,
+  .input-description {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #1b5692;
+    background-color: #1e1e1e;
+    color: #dcdcdc;
+    font-size: 16px;
+  }
+  
+  .input-description {
+    height: 80px;
+    resize: none;
+  }
+  
+  .save-button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .save-button:hover {
+    background-color: #0056b3;
+  }
+  

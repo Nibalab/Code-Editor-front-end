@@ -1,0 +1,116 @@
+/* src/components/AdminPage/AdminPage.css */
+
+.admin-page {
+    padding: 20px;
+    background-color: #282c34;
+    color: #dcdcdc;
+    min-height: 100vh;
+  }
+  
+  .admin-heading {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #ffffff;
+  }
+  
+  .sub-heading {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #ffffff;
+  }
+  
+  .search-input, .form-control, .file-input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background-color: #1e1e1e;
+    color: #dcdcdc;
+    font-size: 16px;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .admin-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #ffffff;
+  }
+  
+  .admin-checkbox input {
+    margin-left: 10px;
+  }
+  
+  .add-button, .upload-button, .details-button, .delete-button, .toggle-button {
+    display: inline-block;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add-button, .upload-button {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  
+  .add-button:hover, .upload-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .details-button {
+    background-color: #28a745;
+    color: #ffffff;
+  }
+  
+  .details-button:hover {
+    background-color: #218838;
+  }
+  
+  .delete-button {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+  
+  .delete-button:hover {
+    background-color: #c82333;
+  }
+  
+  .toggle-button {
+    background-color: #ffc107;
+    color: #212529;
+  }
+  
+  .toggle-button:hover {
+    background-color: #e0a800;
+  }
+  
+  .user-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #3a3a3a;
+    border-radius: 5px;
+  }
+  
+  .button-group {
+    display: flex;
+  }
+  

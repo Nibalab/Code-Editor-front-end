@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
 import { Editor } from "@monaco-editor/react";
-import LanguageSelector from "./LanguageSelector";
-import { CODE_SNIPPETS } from "../constants";
-import Output from "./Output";
+import LanguageSelector from "../LanguageSelector";
+import { CODE_SNIPPETS } from "../../constants";
+import Output from "../Output";
 import axios from 'axios';
+import './CodeEditor.css';
 
 const CodeEditor = () => {
   const editorRef = useRef();
@@ -41,9 +42,9 @@ const CodeEditor = () => {
   };
 
   return (
-    <div style={styles.wrapper}>
-      <div style={styles.container}>
-        <div style={styles.editorContainer}>
+    <div className="code-editor-wrapper">
+      <div className="code-editor-container">
+        <div className="editor-container">
           <LanguageSelector language={language} onSelect={onSelect} />
           <Editor
             options={{
@@ -59,19 +60,21 @@ const CodeEditor = () => {
             value={value}
             onChange={(value) => setValue(value)}
           />
-          <div>
+          <div className="input-section">
             <input
               type="text"
+              className="input-title"
               placeholder="Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
             <textarea
+              className="input-description"
               placeholder="Description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <button onClick={saveCode}>Save</button>
+            <button className="save-button" onClick={saveCode}>Save</button>
           </div>
         </div>
         <Output editorRef={editorRef} language={language} />
@@ -80,21 +83,20 @@ const CodeEditor = () => {
   );
 };
 
-const styles = {
-  container: {
-    display: 'flex',
-    gap: '16px',
-  },
-  editorContainer: {
-    width: '50%',
-  },
-
-  wrapper: {
-    minHeight: '100vh',
-    backgroundColor: '#0f0a19', 
-    color: '#dcdcdc', 
-    padding: '32px 24px',
-  }  
-};
+// const styles = {
+//   container: {
+//     display: 'flex',
+//     gap: '16px',
+//   },
+//   editorContainer: {
+//     width: '50%',
+//   },
+//   wrapper: {
+//     minHeight: '100vh',
+//     backgroundColor: '#0f0a19', 
+//     color: '#dcdcdc', 
+//     padding: '32px 24px',
+//   }  
+// };
 
 export default CodeEditor;

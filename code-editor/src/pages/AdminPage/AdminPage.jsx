@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Papa from 'papaparse';
 import { useNavigate } from 'react-router-dom';
+import './AdminPage.css'; // Import the CSS file
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
@@ -120,56 +121,66 @@ const AdminPage = () => {
     : [];
 
   return (
-    <div>
-      <h1>Users List</h1>
+    <div className="admin-page">
+      <h1 className="admin-heading">Users List</h1>
       <input
         type="text"
+        className="search-input"
         placeholder="Search by name"
         value={searchTerm}
         onChange={handleSearch}
       />
-      <h2>Add New User</h2>
-      <input
-        type="text"
-        placeholder="Name"
-        value={newUser.name}
-        onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={newUser.email}
-        onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={newUser.password}
-        onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-      />
-      <label>
-        Admin:
+      <h2 className="sub-heading">Add New User</h2>
+      <div className="input-group">
         <input
-          type="checkbox"
-          checked={newUser.is_admin}
-          onChange={(e) => setNewUser({ ...newUser, is_admin: e.target.checked })}
+          type="text"
+          className="form-control"
+          placeholder="Name"
+          value={newUser.name}
+          onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
         />
-      </label>
-      <button onClick={handleAddUser}>Add User</button>
+        <input
+          type="email"
+          className="form-control"
+          placeholder="Email"
+          value={newUser.email}
+          onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+        />
+        <input
+          type="password"
+          className="form-control"
+          placeholder="Password"
+          value={newUser.password}
+          onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+        />
+        <label className="admin-checkbox">
+          Admin:
+          <input
+            type="checkbox"
+            checked={newUser.is_admin}
+            onChange={(e) => setNewUser({ ...newUser, is_admin: e.target.checked })}
+          />
+        </label>
+        <button className="add-button" onClick={handleAddUser}>Add User</button>
+      </div>
 
-      <h2>Bulk Import Users</h2>
-      <input type="file" accept=".csv, .xlsx, .xls" onChange={handleFileChange} />
-      <button onClick={handleFileUpload}>Upload File</button>
+      <h2 className="sub-heading">Bulk Import Users</h2>
+      <div className="input-group">
+        <input type="file" className="file-input" accept=".csv, .xlsx, .xls" onChange={handleFileChange} />
+        <button className="upload-button" onClick={handleFileUpload}>Upload File</button>
+      </div>
 
-      <ul>
+      <ul className="user-list">
         {filteredUsers.map(user => (
-          <li key={user.id}>
+          <li key={user.id} className="user-item">
             {user.name} - {user.email} - {user.is_admin ? 'Admin' : 'User'}
-            <button onClick={() => navigate(`/users/${user.id}`)}>Details</button>
-            <button onClick={() => handleDelete(user.id)}>Delete</button>
-            <button onClick={() => handleToggleAdmin(user.id)}>
-              {user.is_admin ? 'Make User' : 'Make Admin'}
-            </button>
+            <div className="button-group">
+              <button className="details-button" onClick={() => navigate(`/users/${user.id}`)}>Details</button>
+              <button className="delete-button" onClick={() => handleDelete(user.id)}>Delete</button>
+              <button className="toggle-button" onClick={() => handleToggleAdmin(user.id)}>
+                {user.is_admin ? 'Make User' : 'Make Admin'}
+              </button>
+            </div>
           </li>
         ))}
       </ul>
