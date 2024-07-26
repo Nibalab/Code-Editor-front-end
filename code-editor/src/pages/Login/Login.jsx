@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import './Login.css';  // Import the CSS file
 
 const Login = (props) => {
     const navigate = useNavigate();
@@ -31,26 +32,28 @@ const Login = (props) => {
     }
 
     return (
-        <form onSubmit={submit}>
-            <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
-            <input 
-                type="email" 
-                className="form-control" 
-                placeholder="Email address" 
-                required
-                onChange={e => setEmail(e.target.value)}
-            />
+        <div className="login-container">
+            <form onSubmit={submit} className="login-form">
+                <h1 className="h3 mb-3 fw-normal login-heading">Please sign in</h1>
+                <input 
+                    type="email" 
+                    className="form-control" 
+                    placeholder="Email address" 
+                    required
+                    onChange={e => setEmail(e.target.value)}
+                />
 
-            <input 
-                type="password" 
-                className="form-control" 
-                placeholder="Password" 
-                required
-                onChange={e => setPassword(e.target.value)}
-            />
+                <input 
+                    type="password" 
+                    className="form-control" 
+                    placeholder="Password" 
+                    required
+                    onChange={e => setPassword(e.target.value)}
+                />
 
-            <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-        </form>
+                <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            </form>
+        </div>
     );
 };
 
