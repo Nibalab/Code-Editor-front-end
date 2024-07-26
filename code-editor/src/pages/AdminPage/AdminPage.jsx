@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Papa from 'papaparse';
 import { useNavigate } from 'react-router-dom';
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [newUser, setNewUser] = useState({ name: '', email: '', password: '', is_admin: false });
+  const [selectedFile, setSelectedFile] = useState(null); // State to store selected file
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,11 +17,10 @@ const AdminPage = () => {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
         });
-        console.log('Fetched users:', response.data.users); // Debugging line
-        setUsers(response.data.users || []); // Ensure users is an array
+        setUsers(response.data.users || []);
       } catch (error) {
         console.error('Error fetching users:', error);
-        setUsers([]); // Set users to an empty array on error
+        setUsers([]);
       }
     };
 
@@ -62,12 +63,7 @@ const AdminPage = () => {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
-      console.log('Created user:', response.data); // Debugging line
-      
-      // Check if the response contains the user data in the expected format
       const createdUser = response.data.user || response.data;
-      
-      // Ensure that the user has the necessary fields
       if (createdUser && createdUser.id && createdUser.name) {
         setUsers([...users, createdUser]);
         setNewUser({ name: '', email: '', password: '', is_admin: false });
@@ -78,12 +74,51 @@ const AdminPage = () => {
       console.error('Error creating user:', error);
     }
   };
-  
-  // Ensure that filtering handles cases where user.name might be undefined
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleFileUpload = async () => {
+    if (!selectedFile) {
+      console.error('No file selected for upload');
+      return;
+    }
+
+    Papa.parse(selectedFile, {
+      header: true,
+      complete: async (results) => {
+        const users = results.data;
+
+        // Validate data
+        const validUsers = users.filter(user => user.email && user.name && user.password);
+
+        // Send valid users to backend
+        for (const user of validUsers) {
+          try {
+            const response = await axios.post('http://localhost:8000/api/users', user, {
+              headers: { 'Content-Type': 'application/json' },
+              withCredentials: true,
+            });
+
+            if (response.status === 201) {
+              const createdUser = response.data.user || response.data;
+              setUsers(prevUsers => [...prevUsers, createdUser]);
+            } else {
+              console.error('Error creating user:', response.data);
+            }
+          } catch (error) {
+            console.error('Error creating user:', error.response ? error.response.data : error);
+          }
+        }
+      },
+    });
+  };
+
   const filteredUsers = Array.isArray(users)
     ? users.filter(user => user.name && user.name.toLowerCase().includes(searchTerm.toLowerCase()))
     : [];
-  
+
   return (
     <div>
       <h1>Users List</h1>
@@ -121,6 +156,11 @@ const AdminPage = () => {
         />
       </label>
       <button onClick={handleAddUser}>Add User</button>
+
+      <h2>Bulk Import Users</h2>
+      <input type="file" accept=".csv, .xlsx, .xls" onChange={handleFileChange} />
+      <button onClick={handleFileUpload}>Upload File</button>
+
       <ul>
         {filteredUsers.map(user => (
           <li key={user.id}>
