@@ -1,18 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom'; // Optional if you want to use Link instead of <a>
 import './HeroSection.css';
-import gsap from "gsap"
+// import gsap from "gsap"
 
 const HeroSection = ({ name }) => {
   const heroRef = useRef(null);
   const textRef = useRef(null);
   const ctaRef = useRef(null);
 
-  useEffect(() => {
-    gsap.from(heroRef.current, { duration: 1, opacity: 0, ease: 'power3.out' });
-    gsap.from(textRef.current, { duration: 1, opacity: 0, y: 30, delay: 0.5, ease: 'power3.out' });
-    gsap.from(ctaRef.current.children, { duration: 1, opacity: 0, y: 30, stagger: 0.2, delay: 1, ease: 'power3.out' });
-  }, []);
+  // useEffect(() => {
+  //   gsap.from(heroRef.current, { duration: 1, opacity: 0, ease: 'power3.out' });
+  //   gsap.from(textRef.current, { duration: 1, opacity: 0, y: 30, delay: 0.5, ease: 'power3.out' });
+  //   gsap.from(ctaRef.current.children, { duration: 1, opacity: 0, y: 30, stagger: 0.2, delay: 1, ease: 'power3.out' });
+  // }, []);
 
   return (
     <header className="hero-section" ref={heroRef}>
