@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import './Login.css';  // Import the CSS file
 
@@ -27,9 +27,11 @@ const Login = (props) => {
         setRedirect(true);
     }
 
-    if (redirect) {
-        navigate('/');
-    }
+    useEffect(() => {
+        if (redirect) {
+            navigate('/');
+        }
+    }, [redirect, navigate]);
 
     return (
         <div className="login-container">

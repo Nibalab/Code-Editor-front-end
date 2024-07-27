@@ -2,18 +2,18 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CodeEditor from "./components/CodeEditor/CodeEditor";
 import NavBar from "./components/Navbar/Navbar";
 import { useEffect, useState } from "react";
-import Register from "../src/pages/Register/Register";
-import Home from "../src/pages/Home/Home";
-import Login from "../src/pages/Login/Login";
+import Register from "./pages/Register/Register";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login";
 import PrivateRoute from "./components/PrivateRoute"; 
 import AdminRoute from "./components/AdminRoute"; 
-import AdminPage from "../src/pages/AdminPage/AdminPage"; 
-import UserDetails from "../src/pages/UserDetails/UserDetails";
-import "./App.css";
-// import axios from 'axios';
-import Footer from "../src/components/Footer/Footer";
+import AdminPage from "./pages/AdminPage/AdminPage"; 
+import UserDetails from "./pages/UserDetails/UserDetails";
+import Footer from "./components/Footer/Footer";
 import Projects from "./pages/Projects/Projects";
 import CodeDetail from "./pages/Projects/CodeDetail";
+import ChatPage from "./pages/ChatPage/ChatPage";
+import "./App.css";
 
 function App() {
   const [name, setName] = useState('');
@@ -36,8 +36,8 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <NavBar name={name} setName={setName} is_admin={isAdmin} />
-      <Routes>
+        <NavBar name={name} setName={setName} is_admin={isAdmin} />
+        <Routes>
           <Route path="/" element={<Home name={name}/>}/>
           <Route path="/login" element={<Login setName={setName}/>}/>
           <Route path="/register" element={<Register/>}/>
@@ -59,7 +59,6 @@ function App() {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/projects"
             element={
@@ -68,8 +67,7 @@ function App() {
               </PrivateRoute>
             }
           />
-
-         <Route
+          <Route
             path="/code/:id"
             element={
               <PrivateRoute name={name}>
@@ -77,7 +75,6 @@ function App() {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/users/:id"
             element={
@@ -88,12 +85,19 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/chat"
+            element={
+              <PrivateRoute name={name}>
+                <ChatPage />
+              </PrivateRoute>
+            }
+          />
         </Routes>
         <Footer />
       </BrowserRouter>
     </div>
   );
 }
-
 
 export default App;
