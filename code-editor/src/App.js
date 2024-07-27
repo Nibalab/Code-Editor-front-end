@@ -13,6 +13,7 @@ import "./App.css";
 // import axios from 'axios';
 import Footer from "../src/components/Footer/Footer";
 import Projects from "./pages/Projects/Projects";
+import CodeDetail from "./pages/Projects/CodeDetail";
 
 function App() {
   const [name, setName] = useState('');
@@ -64,6 +65,15 @@ function App() {
             element={
               <PrivateRoute name={name}>
                 <Projects />
+              </PrivateRoute>
+            }
+          />
+
+         <Route
+            path="/code/:id"
+            element={
+              <PrivateRoute name={name}>
+                <CodeDetail />
               </PrivateRoute>
             }
           />
