@@ -12,6 +12,7 @@ import UserDetails from "../src/pages/UserDetails/UserDetails";
 import "./App.css";
 // import axios from 'axios';
 import Footer from "../src/components/Footer/Footer";
+import Projects from "./pages/Projects/Projects";
 
 function App() {
   const [name, setName] = useState('');
@@ -54,6 +55,15 @@ function App() {
                 <AdminRoute isAdmin={isAdmin}>
                   <AdminPage />
                 </AdminRoute>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/projects"
+            element={
+              <PrivateRoute name={name}>
+                <Projects />
               </PrivateRoute>
             }
           />
