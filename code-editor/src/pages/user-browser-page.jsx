@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ProfileCard from "../components/Profile-Card/profile_card";
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../components/SearchBar/index";
 
 const UserSearch = () => {
     const [users, setUsers] = useState([]);
