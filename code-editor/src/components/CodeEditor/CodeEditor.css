@@ -53,4 +53,15 @@
   .save-button:hover {
     background-color: #0056b3;
   }
+ 
+  .suggestion-widget {
+    position: absolute;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    padding: 5px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  
   

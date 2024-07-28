@@ -1,7 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CodeEditor from "./components/CodeEditor/CodeEditor";
 import NavBar from "./components/Navbar/Navbar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from './userSlice';
 import Register from "../src/pages/Register/Register";
 import Home from "../src/pages/Home/Home";
 import Login from "../src/pages/Login/Login";
@@ -10,14 +12,13 @@ import AdminRoute from "./components/AdminRoute";
 import AdminPage from "../src/pages/AdminPage/AdminPage"; 
 import UserDetails from "../src/pages/UserDetails/UserDetails";
 import "./App.css";
-// import axios from 'axios';
 import Footer from "../src/components/Footer/Footer";
 import Projects from "./pages/Projects/Projects";
 import CodeDetail from "./pages/Projects/CodeDetail";
 
 function App() {
-  const [name, setName] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false);
+  const dispatch = useDispatch();
+  const { name, isAdmin } = useSelector((state) => state.user);
 
   useEffect(() => {
     (async () => {
@@ -28,18 +29,17 @@ function App() {
 
       const content = await response.json();
 
-      setName(content.name);
-      setIsAdmin(content.is_admin);
+      dispatch(setUser({ name: content.name, isAdmin: content.is_admin }));
     })();
-  }, [name, isAdmin]);
+  }, [dispatch]);
 
   return (
     <div className="App">
       <BrowserRouter>
-      <NavBar name={name} setName={setName} is_admin={isAdmin} />
+      <NavBar name={name} />
       <Routes>
           <Route path="/" element={<Home name={name}/>}/>
-          <Route path="/login" element={<Login setName={setName}/>}/>
+          <Route path="/login" element={<Login setName={dispatch(setUser)}/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route 
             path="/editor" 
@@ -94,6 +94,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
