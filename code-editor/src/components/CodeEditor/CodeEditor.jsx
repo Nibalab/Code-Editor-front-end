@@ -6,10 +6,11 @@ import Output from "../Output";
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 import './CodeEditor.css';
+import { Link } from "react-router-dom";
 
 const CodeEditor = () => {
   const editorRef = useRef();
-  const suggestionWidgetRef = useRef(null); 
+  const suggestionWidgetRef = useRef(null);
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("python");
   const [title, setTitle] = useState("");
@@ -38,7 +39,7 @@ const CodeEditor = () => {
   };
 
   const showSuggestionWidget = (editor, suggestion) => {
-    hideSuggestionWidget(); 
+    hideSuggestionWidget();
 
     const domNode = document.createElement('div');
     domNode.className = 'suggestion-widget';
@@ -62,7 +63,7 @@ const CodeEditor = () => {
       domNode.style.left = `${coords.left}px`;
     }
 
-    suggestionWidgetRef.current = domNode; 
+    suggestionWidgetRef.current = domNode;
   };
 
   const hideSuggestionWidget = () => {
@@ -87,7 +88,7 @@ const CodeEditor = () => {
   const onSelect = (lang) => {
     setLanguage(lang);
     setValue(CODE_SNIPPETS[lang] || '');
-    suggestionCache.current = {}; 
+    suggestionCache.current = {};
   };
 
   const onMount = (editor, monaco) => {
@@ -156,6 +157,7 @@ const CodeEditor = () => {
     <div className="code-editor-wrapper">
       <div className="code-editor-container">
         <div className="editor-container">
+          <Link to={"/web-editor"}>Go to web editor</Link>
           <LanguageSelector language={language} onSelect={onSelect} />
           <Editor
             options={{
@@ -178,7 +180,7 @@ const CodeEditor = () => {
             value={value}
             onChange={(value) => {
               setValue(value);
-              handleEditorChange(value); 
+              handleEditorChange(value);
             }}
           />
           <div className="input-section">

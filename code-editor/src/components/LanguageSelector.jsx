@@ -2,7 +2,7 @@ import { useState } from "react";
 import { LANGUAGE_VERSIONS } from "../constants";
 
 const languages = Object.entries(LANGUAGE_VERSIONS);
-const ACTIVE_COLOR = "#3182ce"; // Corresponds to Chakra UI's "blue.400"
+const ACTIVE_COLOR = "#3182ce"; 
 
 const LanguageSelector = ({ language, onSelect }) => {
   const [isMenuOpen, setMenuOpen] = useState(false);

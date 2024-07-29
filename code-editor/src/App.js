@@ -15,6 +15,7 @@ import "./App.css";
 import Footer from "../src/components/Footer/Footer";
 import Projects from "./pages/Projects/Projects";
 import CodeDetail from "./pages/Projects/CodeDetail";
+import WebEditor from "./components/WebEditor/WebEditor";
 
 function App() {
   const dispatch = useDispatch();
@@ -74,6 +75,15 @@ function App() {
             element={
               <PrivateRoute name={name}>
                 <CodeDetail />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="web-editor"
+            element={
+              <PrivateRoute>
+                <WebEditor />
               </PrivateRoute>
             }
           />
