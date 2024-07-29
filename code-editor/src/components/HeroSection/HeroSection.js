@@ -15,7 +15,7 @@ const HeroSection = ({ name }) => {
       gsap.from(ctaRef.current.children, { duration: 1, opacity: 0, y: 30, stagger: 0.2, delay: 1, ease: 'power3.out' });
     });
 
-    return () => ctx.revert(); // Clean up the GSAP context on unmount
+    return () => ctx.revert(); 
   }, []);
 
   return (

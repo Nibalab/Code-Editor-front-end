@@ -12,7 +12,7 @@ const ChatHistory = ({ chats, setSelectedChat, currentUser }) => {
       <ul>
         {chats.map((chat) => {
           if (!chat.user1 || !chat.user2) {
-            return null; // Skip chats where user information is not available
+            return null; 
           }
 
           const otherUser = chat.user1.id === currentUser.id ? chat.user2 : chat.user1;

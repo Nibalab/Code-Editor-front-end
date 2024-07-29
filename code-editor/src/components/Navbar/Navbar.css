@@ -1,11 +1,11 @@
 .navbar {
-    background-color: #F9F9F9; /* Light grey color for the navbar */
+    background-color: #F9F9F9; 
     padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #1E2A38; /* Dark blue text color for contrast */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for better separation */
+    color: #1E2A38; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   }
   
   .navbar .container {
@@ -17,7 +17,7 @@
   
   .navbar-brand {
     font-size: 1.5rem;
-    color: #1E2A38; /* Dark blue color for the brand */
+    color: #1E2A38; 
     text-decoration: none;
   }
   
@@ -34,7 +34,7 @@
   
   .navbar-links a {
     margin: 0 1rem;
-    color: #1E2A38; /* Dark blue color for links */
+    color: #1E2A38; 
     text-decoration: none;
   }
   
