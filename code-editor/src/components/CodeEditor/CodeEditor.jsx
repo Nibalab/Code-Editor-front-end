@@ -56,7 +56,13 @@ const CodeEditor = () => {
       editorDom.appendChild(domNode);
     }
 
-    const { lineNumber, column } = editor.getPosition();
+    const position = editor.getPosition();
+    if (!position) {
+      console.error('Editor position is null.');
+      return;
+    }
+
+    const { lineNumber, column } = position;
     const coords = editor.getScrolledVisiblePosition({ lineNumber, column });
     if (coords) {
       domNode.style.top = `${coords.top + coords.height}px`;
@@ -98,29 +104,37 @@ const CodeEditor = () => {
     editor.onDidChangeModelContent(() => {
       const model = editor.getModel();
       const currentPosition = editor.getPosition();
-      const word = model.getWordUntilPosition(currentPosition);
 
-      if (word.word.length > 0) {
-        handleEditorChange(model.getValue());
-      } else {
-        hideSuggestionWidget();
+      if (model && currentPosition) {
+        const word = model.getWordUntilPosition(currentPosition);
+        if (word.word.length > 0) {
+          handleEditorChange(model.getValue());
+        } else {
+          hideSuggestionWidget();
+        }
       }
     });
 
     editor.addCommand(monaco.KeyCode.Tab, () => {
       if (suggestionWidgetRef.current) {
         const suggestion = suggestionWidgetRef.current.innerText;
-        editor.executeEdits('', [{
-          range: new monaco.Range(
-            editor.getPosition().lineNumber,
-            editor.getPosition().column,
-            editor.getPosition().lineNumber,
-            editor.getPosition().column
-          ),
-          text: suggestion,
-          forceMoveMarkers: true
-        }]);
-        hideSuggestionWidget();
+        const position = editor.getPosition();
+
+        if (position) {
+          editor.executeEdits('', [{
+            range: new monaco.Range(
+              position.lineNumber,
+              position.column,
+              position.lineNumber,
+              position.column
+            ),
+            text: suggestion,
+            forceMoveMarkers: true
+          }]);
+          hideSuggestionWidget();
+        } else {
+          console.error('Cannot apply suggestion: Editor position is null.');
+        }
       }
     });
   };
