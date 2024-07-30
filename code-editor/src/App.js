@@ -13,6 +13,7 @@ import Footer from "./components/Footer/Footer";
 import Projects from "./pages/Projects/Projects";
 import CodeDetail from "./pages/Projects/CodeDetail";
 import ChatPage from "./pages/ChatPage/ChatPage";
+import WebEditor from "./components/WebEditor/WebEditor";
 import "./App.css";
 
 function App() {
@@ -72,6 +73,14 @@ function App() {
             element={
               <PrivateRoute name={name}>
                 <CodeDetail />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="web-editor"
+            element={
+              <PrivateRoute>
+                <WebEditor />
               </PrivateRoute>
             }
           />
