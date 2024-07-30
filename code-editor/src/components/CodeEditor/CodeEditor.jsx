@@ -4,7 +4,6 @@ import LanguageSelector from "../LanguageSelector";
 import { CODE_SNIPPETS } from "../../constants";
 import Output from "../Output";
 import axios from 'axios';
-import debounce from 'lodash/debounce';
 import './CodeEditor.css';
 import { Link } from "react-router-dom";
 
@@ -16,9 +15,18 @@ const CodeEditor = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [lastLineNumber, setLastLineNumber] = useState(0);
   const suggestionCache = useRef({});
+  const abortControllerRef = useRef(null);
 
   const fetchSuggestions = async (prompt, lang) => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    abortControllerRef.current = new AbortController();
+
     if (suggestionCache.current[`${prompt}_${lang}`]) {
       return suggestionCache.current[`${prompt}_${lang}`];
     }
@@ -27,13 +35,20 @@ const CodeEditor = () => {
       const response = await axios.post('http://localhost:8000/api/get-suggestions', {
         prompt,
         language: lang,
+      }, {
+        signal: abortControllerRef.current.signal,
       });
+
       console.log('API response:', response.data);
       const suggestionList = response.data.choices[0].message.content.split('\n').map(line => line.trim()).filter(line => line);
       suggestionCache.current[`${prompt}_${lang}`] = suggestionList;
       return suggestionList;
     } catch (error) {
-      console.error('Error fetching code suggestions:', error);
+      if (axios.isCancel(error)) {
+        console.log('Fetch request was cancelled.');
+      } else {
+        console.error('Error fetching code suggestions:', error);
+      }
       return [];
     }
   };
@@ -79,22 +94,31 @@ const CodeEditor = () => {
     }
   };
 
-  const handleEditorChange = useCallback(
-    debounce(async (value) => {
-      const prompt = value;
-      const fetchedSuggestions = await fetchSuggestions(prompt, language);
-      setSuggestions(fetchedSuggestions);
-      if (fetchedSuggestions.length > 0) {
-        const suggestion = fetchedSuggestions[0];
-        showSuggestionWidget(editorRef.current, suggestion);
+  const fetchSuggestionsForCurrentLine = async () => {
+    const model = editorRef.current.getModel();
+    const position = editorRef.current.getPosition();
+
+    if (model && position) {
+      const lineNumber = position.lineNumber;
+      if (lineNumber !== lastLineNumber) {
+        const prompt = model.getValue();
+        const fetchedSuggestions = await fetchSuggestions(prompt, language);
+        setSuggestions(fetchedSuggestions);
+        if (fetchedSuggestions.length > 0) {
+          const suggestion = fetchedSuggestions[0];
+          showSuggestionWidget(editorRef.current, suggestion);
+          setLastLineNumber(lineNumber);
+        }
       }
-    }, 300), [language]
-  );
+    }
+  };
 
   const onSelect = (lang) => {
     setLanguage(lang);
     setValue(CODE_SNIPPETS[lang] || '');
     suggestionCache.current = {};
+    abortControllerRef.current?.abort(); 
+    abortControllerRef.current = new AbortController();
   };
 
   const onMount = (editor, monaco) => {
@@ -103,17 +127,12 @@ const CodeEditor = () => {
 
     editor.onDidChangeModelContent(() => {
       const model = editor.getModel();
-      const currentPosition = editor.getPosition();
-
-      if (model && currentPosition) {
-        const word = model.getWordUntilPosition(currentPosition);
-        if (word.word.length > 0) {
-          handleEditorChange(model.getValue());
-        } else {
-          hideSuggestionWidget();
-        }
+      if (model) {
+        fetchSuggestionsForCurrentLine(); 
       }
     });
+
+    editor.onDidChangeCursorPosition(fetchSuggestionsForCurrentLine);
 
     editor.addCommand(monaco.KeyCode.Tab, () => {
       if (suggestionWidgetRef.current) {
@@ -140,6 +159,11 @@ const CodeEditor = () => {
   };
 
   const saveCode = async () => {
+    if (value === CODE_SNIPPETS[language]) {
+      setFeedbackMessage("Please make changes to the code before saving.");
+      return;
+    }
+  
     try {
       const response = await axios.post('http://localhost:8000/api/codes', {
         title,
@@ -150,12 +174,15 @@ const CodeEditor = () => {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
-
+  
+      setFeedbackMessage("Code saved successfully!");
       console.log('Code saved successfully:', response.data);
     } catch (error) {
+      setFeedbackMessage("Error saving code. Please try again.");
       console.error('Error saving code:', error);
     }
   };
+  
 
   useEffect(() => {
     const fetchInitialSuggestions = async () => {
@@ -165,6 +192,11 @@ const CodeEditor = () => {
     };
 
     fetchInitialSuggestions();
+
+    // Cleanup function to abort any ongoing request
+    return () => {
+      abortControllerRef.current?.abort();
+    };
   }, [language]);
 
   return (
@@ -194,7 +226,6 @@ const CodeEditor = () => {
             value={value}
             onChange={(value) => {
               setValue(value);
-              handleEditorChange(value);
             }}
           />
           <div className="input-section">
@@ -213,11 +244,16 @@ const CodeEditor = () => {
             />
             <button className="save-button" onClick={saveCode}>Save</button>
           </div>
+          {feedbackMessage && (
+            <div className="feedback-message">
+              {feedbackMessage}
+            </div>
+          )}
         </div>
         <Output editorRef={editorRef} language={language} />
       </div>
     </div>
-  );
+  );  
 };
 
 export default CodeEditor;
