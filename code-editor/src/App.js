@@ -14,6 +14,7 @@ import Projects from "./pages/Projects/Projects";
 import CodeDetail from "./pages/Projects/CodeDetail";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import "./App.css";
+import Profile from "./pages/Profile";
 
 function App() {
   const [name, setName] = useState('');
@@ -49,6 +50,13 @@ function App() {
               </PrivateRoute>
             }
           />
+           <Route 
+            path="/profile" 
+            element={
+              
+                <Profile/>}
+              />
+            
           <Route
             path="/admin"
             element={
