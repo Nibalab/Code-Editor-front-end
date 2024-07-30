@@ -1,0 +1,29 @@
+.chat-history {
+    padding: 10px;
+    background-color: #f9f9f9; /* Light grey background color */
+    border-radius: 5px;
+}
+
+.chat-history h2{
+    color: #0056b3;
+    margin-bottom: 10px;
+}
+.chat-history ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.chat-history li {
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #007bff; /* Background color for chat items */
+    color: white; /* Text color */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.chat-history li:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

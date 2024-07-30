@@ -16,6 +16,7 @@ import Footer from "../src/components/Footer/Footer";
 import Projects from "./pages/Projects/Projects";
 import CodeDetail from "./pages/Projects/CodeDetail";
 import WebEditor from "./components/WebEditor/WebEditor";
+import ChatPage from "./pages/ChatPage/ChatPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -95,6 +96,14 @@ function App() {
                 <AdminRoute isAdmin={isAdmin}>
                   <UserDetails />
                 </AdminRoute>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/chat"
+            element={
+              <PrivateRoute name={name}>
+                <ChatPage />
               </PrivateRoute>
             }
           />
