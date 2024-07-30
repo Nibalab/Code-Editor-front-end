@@ -25,6 +25,7 @@ const Navbar = (props) => {
     } else {
         menu = (
             <div className="navbar-actions">
+                <Link to="/profile" className="btn btn-profile">Profile</Link>
                 <Link to="/" className="btn btn-logout" onClick={logout}>Logout</Link>
                 {props.is_admin && (
                     <Link to="/admin" className="btn btn-admin">Admin</Link>
