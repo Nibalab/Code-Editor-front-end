@@ -40,7 +40,7 @@ function App() {
       <NavBar name={name} />
       <Routes>
           <Route path="/" element={<Home name={name}/>}/>
-          <Route path="/login" element={<Login setName={dispatch(setUser)}/>}/>
+          <Route path="/login" element={<Login setName={(user) => dispatch(setUser(user))}/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route 
             path="/editor" 
