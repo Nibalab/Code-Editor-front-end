@@ -63,4 +63,20 @@
     z-index: 1000;
   }
   
+  .feedback-message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .feedback-message {
+    color: #fff;
+    background-color: #4caf50; 
+  }
+  
+  .feedback-message.error {
+    color: #fff;
+    background-color: hsl(4, 94%, 51%);
+  }
   
