@@ -72,11 +72,11 @@
   
   .feedback-message {
     color: #fff;
-    background-color: #4caf50; /* Success color */
+    background-color: #4caf50; 
   }
   
   .feedback-message.error {
     color: #fff;
-    background-color: #f44336; /* Error color */
+    background-color: hsl(4, 94%, 51%);
   }
   

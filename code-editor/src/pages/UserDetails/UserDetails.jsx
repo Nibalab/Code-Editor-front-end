@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom';
 const UserDetails = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Added loading state
-  const [error, setError] = useState(null); // Added error state
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -15,9 +15,8 @@ const UserDetails = () => {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
         });
-        // Check the structure of the response
-        console.log('User data:', response.data); // Debugging line
-        setUser(response.data.user || response.data); // Adjust based on API response
+
+        setUser(response.data.user || response.data);
         setLoading(false);
       } catch (error) {
         console.error(`Error fetching user with ID ${id}:`, error);

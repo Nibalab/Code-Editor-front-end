@@ -20,38 +20,41 @@ const CodeEditor = () => {
   const suggestionCache = useRef({});
   const abortControllerRef = useRef(null);
 
-  const fetchSuggestions = async (prompt, lang) => {
+  const fetchSuggestions = async (prompt, lang, task = 'completion') => {
     if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
+        abortControllerRef.current.abort();
     }
 
     abortControllerRef.current = new AbortController();
 
-    if (suggestionCache.current[`${prompt}_${lang}`]) {
-      return suggestionCache.current[`${prompt}_${lang}`];
+    const cacheKey = `${prompt}_${lang}_${task}`;
+    if (suggestionCache.current[cacheKey]) {
+        return suggestionCache.current[cacheKey];
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/api/get-suggestions', {
-        prompt,
-        language: lang,
-      }, {
-        signal: abortControllerRef.current.signal,
-      });
+        const response = await axios.post('http://localhost:8000/api/get-suggestions', {
+            prompt,
+            language: lang,
+            task,
+        }, {
+            signal: abortControllerRef.current.signal,
+        });
 
-      console.log('API response:', response.data);
-      const suggestionList = response.data.choices[0].message.content.split('\n').map(line => line.trim()).filter(line => line);
-      suggestionCache.current[`${prompt}_${lang}`] = suggestionList;
-      return suggestionList;
+        console.log('API response:', response.data);
+        const suggestionList = response.data.choices[0].message.content.split('\n').map(line => line.trim()).filter(line => line);
+        suggestionCache.current[cacheKey] = suggestionList;
+        return suggestionList;
     } catch (error) {
-      if (axios.isCancel(error)) {
-        console.log('Fetch request was cancelled.');
-      } else {
-        console.error('Error fetching code suggestions:', error);
-      }
-      return [];
+        if (axios.isCancel(error)) {
+            console.log('Fetch request was cancelled.');
+        } else {
+            console.error('Error fetching code suggestions:', error);
+        }
+        return [];
     }
-  };
+};
+
 
   const showSuggestionWidget = (editor, suggestion) => {
     hideSuggestionWidget();
@@ -193,7 +196,6 @@ const CodeEditor = () => {
 
     fetchInitialSuggestions();
 
-    // Cleanup function to abort any ongoing request
     return () => {
       abortControllerRef.current?.abort();
     };
@@ -205,6 +207,23 @@ const CodeEditor = () => {
         <div className="editor-container">
           <Link to={"/web-editor"}>Go to web editor</Link>
           <LanguageSelector language={language} onSelect={onSelect} />
+          <button
+                className="auto-correct-button"
+                onClick={() => {
+                const prompt = editorRef.current.getValue();
+                fetchSuggestions(prompt, language, 'correction').then((corrections) => {
+                if (corrections.length > 0) {
+                  editorRef.current.setValue(corrections.join('\n'));
+                  setFeedbackMessage("Code corrected successfully!");
+                } else {
+                  setFeedbackMessage("No corrections found.");
+              }
+         });
+    }}
+>
+  Auto-Correct
+</button>
+
           <Editor
             options={{
               minimap: {
