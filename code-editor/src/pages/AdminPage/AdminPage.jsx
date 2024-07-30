@@ -46,10 +46,6 @@ const AdminPage = () => {
 
   const handleToggleAdmin = async (id) => {
     const user = users.find(user => user.id === id);
-    if (!user) {
-      console.error(`User with ID ${id} not found`);
-      return;
-    }
     const updatedData = { is_admin: !user.is_admin };
     try {
       await axios.put(`http://localhost:8000/api/users/${id}`, updatedData, {

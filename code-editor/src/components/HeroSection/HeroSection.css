@@ -23,7 +23,7 @@
   .hero-section p {
     font-size: 1.25rem;
     margin-bottom: 2rem;
-    max-width: 800px; /* Optional: Limit the width of the paragraph for better readability */
+    max-width: 800px; 
   }
   
   .hero-section .cta-buttons .btn {
