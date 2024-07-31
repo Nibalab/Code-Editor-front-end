@@ -1,26 +1,40 @@
 import React, { useState } from "react";
-import ProfileCard from "../components/Profile-Card/profile_card";
-import SearchBar from "../components/SearchBar/index";
+import { useNavigate } from "react-router-dom";
+import SearchBar from "../components/SearchBar";
+import ProfileCard from "../components/ProfileCard";
 
 const UserSearch = () => {
-    const [users, setUsers] = useState([]);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
-    const handleSearch = (user) => {
-        setUsers(user ? [user] : []); 
-    };
+  const handleSearch = (userData) => {
+    setUser(userData);
+  };
 
-    return (
-        <div className="window">
-            <SearchBar onSearch={handleSearch} /> 
-            {users.length > 0 ? (
-                users.map(user => (
-                    <ProfileCard key={user.id} name={user.name} bio={user.email} />
-                ))
-            ) : (
-                <p>No users found.</p>
-            )}
-        </div>
-    );
+  const handleProfileClick = () => {
+    if (user) {
+      navigate(`/profile/${user.user_id}`, { state: { profile: user } });
+    } else {
+      console.error("User data is not available");
+    }
+  };
+  return (
+    <div className="window">
+      <SearchBar onSearch={handleSearch} />
+      {user ? (
+        <ProfileCard 
+          key={user.id} 
+          name={user.name} 
+          email={user.email} 
+          bio={user.bio} 
+          codesCount={user.codesCount}
+          onClick={handleProfileClick} 
+        />
+      ) : (
+        <p>No users found.</p>
+      )}
+    </div>
+  );
 };
 
 export default UserSearch;
