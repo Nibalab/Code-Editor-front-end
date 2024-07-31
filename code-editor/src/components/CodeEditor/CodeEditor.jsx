@@ -1,11 +1,11 @@
-import { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Editor } from "@monaco-editor/react";
 import LanguageSelector from "../LanguageSelector";
 import { CODE_SNIPPETS } from "../../constants";
 import Output from "../Output";
 import axios from 'axios';
 import './CodeEditor.css';
-import { Link } from "react-router-dom";
 
 const CodeEditor = () => {
   const editorRef = useRef();
@@ -205,24 +205,24 @@ const CodeEditor = () => {
     <div className="code-editor-wrapper">
       <div className="code-editor-container">
         <div className="editor-container">
-          <Link to={"/web-editor"}>Go to web editor</Link>
+          <Link to={"/web-editor"} className="btn btn-web-editor">Go to web editor</Link>
           <LanguageSelector language={language} onSelect={onSelect} />
           <button
-                className="auto-correct-button"
-                onClick={() => {
-                const prompt = editorRef.current.getValue();
-                fetchSuggestions(prompt, language, 'correction').then((corrections) => {
+            className="auto-correct-button btn"
+            onClick={() => {
+              const prompt = editorRef.current.getValue();
+              fetchSuggestions(prompt, language, 'correction').then((corrections) => {
                 if (corrections.length > 0) {
                   editorRef.current.setValue(corrections.join('\n'));
                   setFeedbackMessage("Code corrected successfully!");
                 } else {
                   setFeedbackMessage("No corrections found.");
-              }
-         });
-    }}
->
-  Auto-Correct
-</button>
+                }
+              });
+            }}
+          >
+            Auto-Correct
+          </button>
 
           <Editor
             options={{
