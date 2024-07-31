@@ -8,22 +8,25 @@ const SearchBar = ({ onSearch }) => {
   const handleSearch = async () => {
     try {
       const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(query);
-
       const type = isEmail ? "email" : "username";
 
-      const response = await axios.get("http://localhost:8000/api/search", {
+      const response = await axios.get("http://localhost:8000/api/profile", {
+       
         params: {
           query,
           type,
         },
+        withCredentials: true
       });
 
+      console.log('API Response:', response.data); // Debugging line
+
       setError("");
-      onSearch(response.data.user);
+      onSearch(response.data);
     } catch (error) {
-      console.error("Error fetching user:", error.response.data);
+      console.error("Error fetching user:", error.response?.data || error.message);
       setError("User not found");
-      onSearch([]);
+      onSearch(null);
     }
   };
 
