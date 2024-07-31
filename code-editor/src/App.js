@@ -15,7 +15,7 @@ import CodeDetail from "./pages/Projects/CodeDetail";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import "./App.css";
 import Profile from "./pages/Profile";
-
+import UserSearch from "./pages/user-browser-page";
 function App() {
   const [name, setName] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
@@ -42,6 +42,7 @@ function App() {
           <Route path="/" element={<Home name={name}/>}/>
           <Route path="/login" element={<Login setName={setName}/>}/>
           <Route path="/register" element={<Register/>}/>
+          <Route path="/search" element={<UserSearch/>}/>
           <Route 
             path="/editor" 
             element={
