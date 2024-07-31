@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { marked } from "marked";
-
+import './profile.css';
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [bio, setBio] = useState("");
@@ -13,12 +13,13 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/profile", {
+        const response = await axios.get("http://localhost:8000/api/profile/current", {
           withCredentials: true,
         });
         if (response.status === 200) {
-          setProfile(response.data.profile || null);
-          setBio(response.data.profile?.bio || "");
+          setProfile(response.data);
+          setBio(response.data.bio || "");
+          setReadmeContent(response.data.readme_content || "");
         }
       } catch (error) {
         console.error(
@@ -127,6 +128,7 @@ const Profile = () => {
   };
 
   return (
+    <div className="window">
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
@@ -184,6 +186,7 @@ const Profile = () => {
           </form>
         </>
       )}
+    </div>
     </div>
   );
 };
