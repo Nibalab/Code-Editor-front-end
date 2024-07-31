@@ -16,6 +16,8 @@ import ChatPage from "./pages/ChatPage/ChatPage";
 import "./App.css";
 import Profile from "./pages/Profile";
 import UserSearch from "./pages/user-browser-page";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
+
 function App() {
   const [name, setName] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
@@ -51,12 +53,22 @@ function App() {
               </PrivateRoute>
             }
           />
-           <Route 
-            path="/profile" 
-            element={
-              
-                <Profile/>}
-              />
+           <Route
+  path="/profile/edit"
+  element={
+    <PrivateRoute name={name}>
+      <Profile />
+    </PrivateRoute>
+  }
+/>
+<Route
+  path="/profile/:id"
+  element={
+    <PrivateRoute name={name}>
+      <ProfilePage />
+    </PrivateRoute>
+  }
+/>
             
           <Route
             path="/admin"
