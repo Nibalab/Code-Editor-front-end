@@ -20,7 +20,7 @@ const CodeEditor = () => {
 
   const onSelect = (language) => {
     setLanguage(language);
-    setValue(CODE_SNIPPETS[language]);
+    setValue(CODE_SNIPPETS[language] || "");
   };
 
   const saveCode = async () => {
@@ -37,7 +37,7 @@ const CodeEditor = () => {
 
       console.log('Code saved successfully:', response.data);
     } catch (error) {
-      console.error('Error saving code:', error);
+      console.error('Error saving code:', error.response.data); // Log detailed error response
     }
   };
 
@@ -55,7 +55,7 @@ const CodeEditor = () => {
             height="75vh"
             theme="vs-dark"
             language={language}
-            defaultValue={CODE_SNIPPETS[language]}
+            defaultValue={CODE_SNIPPETS[language] || ""}
             onMount={onMount}
             value={value}
             onChange={(value) => setValue(value)}
