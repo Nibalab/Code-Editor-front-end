@@ -1,0 +1,94 @@
+.code-editor-wrapper {
+    min-height: 100vh;
+    background-color: #0f0a19;
+    color: #dcdcdc;
+    padding: 32px 24px;
+}
+
+.code-editor-container {
+    display: flex;
+    gap: 16px;
+}
+
+.editor-container {
+    width: 50%;
+}
+
+.input-section {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-title,
+.input-description {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #1b5692;
+    background-color: #1e1e1e;
+    color: #dcdcdc;
+    font-size: 16px;
+}
+
+.input-description {
+    height: 80px;
+    resize: none;
+}
+
+.save-button,
+.btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-button:hover,
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.suggestion-widget {
+    position: absolute;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    padding: 5px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.feedback-message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #4caf50;
+}
+
+.feedback-message.error {
+    background-color: hsl(4, 94%, 51%);
+}
+
+.btn-web-editor {
+    display: inline-block;
+    padding: 10px 16px;
+    margin-bottom: 10px;
+    background-color: #28a745;
+    color: #ffffff;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-web-editor:hover {
+    background-color: #218838;
+}

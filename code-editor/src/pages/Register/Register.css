@@ -1,0 +1,51 @@
+/* src/components/Register/Register.css */
+
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #282c34;
+}
+
+.register-form {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    margin: auto;
+    background: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.register-form .form-control {
+    display: block; /* Ensure inputs are block level */
+    width: 95%;    /* Make inputs take full width */
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #1b5692;
+}
+
+.register-form .btn-primary {
+    display: block; /* Ensure button is block level */
+    width: 100%;    /* Make button take full width */
+    background-color: #007bff;
+    border-color: #007bff;
+    font-size: 18px;
+    padding: 10px;
+    margin-top: 15px; /* Ensure some space above the button */
+}
+
+.register-form .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.register-form .register-heading {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333; /* Ensure the text is visible */
+    font-weight: normal; /* Ensure the font weight is appropriate */
+}

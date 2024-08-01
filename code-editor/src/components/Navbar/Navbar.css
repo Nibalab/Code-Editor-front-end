@@ -1,0 +1,91 @@
+.navbar {
+  background-color: #F9F9F9; 
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #1E2A38; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  color: #1E2A38; 
+  text-decoration: none;
+}
+
+.navbar-center {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-links a {
+  margin: 0 1rem;
+  color: #1E2A38; 
+  text-decoration: none;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-actions .btn {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  text-align: center;
+}
+
+.navbar-actions .btn-logout {
+  background-color: #E53E3E; /* Red color for logout button */
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.navbar-actions .btn-logout:hover {
+  background-color: #C53030; /* Darker red on hover */
+}
+
+.navbar-actions .btn-admin {
+  background-color: #2B6CB0; /* Blue color for admin button */
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.navbar-actions .btn-admin:hover {
+  background-color: #2C5282; /* Darker blue on hover */
+}
+
+.navbar-actions .btn-login {
+  background-color: #F04E30;
+  color: white;
+}
+
+.navbar-actions .btn-signup {
+  background-color: #1E2A38;
+  color: white;
+}
+
+.navbar-actions .btn-profile {
+  background-color: #E9EEF1;
+  color: #1E2A38;
+}
