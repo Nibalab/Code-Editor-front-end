@@ -1,5 +1,6 @@
 import axios from "axios";
 import { React, useState } from "react";
+import "./SearchBar.css"
 
 const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState("");
@@ -32,7 +33,7 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <div className="window">
-      <input
+      <input className="search-bar"
         type="text"
         placeholder="Enter Username or Email"
         value={query}
