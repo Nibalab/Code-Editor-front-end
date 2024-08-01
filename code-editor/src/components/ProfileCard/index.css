@@ -1,3 +1,11 @@
-.profile_card{
+.profile-card{
+    padding: 20px;
+    margin: 20px;
     box-shadow: 3px 3px 10px black;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.profile-card:hover{
+    background-color:rgb(95, 95, 161) ;
 }
