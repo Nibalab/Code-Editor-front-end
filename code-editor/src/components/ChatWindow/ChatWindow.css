@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: #282c34; /* Light background color */
+    background-color: #282c34; 
     padding: 10px;
     border-radius: 5px;
     overflow-y: auto;
@@ -22,16 +22,16 @@
 }
 
 .message.sender {
-    background-color: #dcf8c6; /* Light green background for sender messages */
+    background-color: #dcf8c6; 
     align-self: flex-end;
-    color: #000; /* Dark text color */
+    color: #000;
 }
 
 .message.receiver {
-    background-color: #fff; /* White background for receiver messages */
+    background-color: #fff; 
     align-self: flex-start;
-    color: #000; /* Dark text color */
-    border: 1px solid #ccc; /* Light border for better visibility */
+    color: #000; 
+    border: 1px solid #ccc; 
 }
 
 .message-input {

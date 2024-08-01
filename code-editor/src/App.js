@@ -14,7 +14,11 @@ import Projects from "./pages/Projects/Projects";
 import CodeDetail from "./pages/Projects/CodeDetail";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import WebEditor from "./components/WebEditor/WebEditor";
+import Profile from "../src/pages/Profile"
+import ProfilePage from "../src/pages/Profile/index"
+import UserSearch from "./pages/user-browser-page";
 import "./App.css";
+
 
 function App() {
   const [name, setName] = useState('');
@@ -42,6 +46,7 @@ function App() {
           <Route path="/" element={<Home name={name}/>}/>
           <Route path="/login" element={<Login setName={setName}/>}/>
           <Route path="/register" element={<Register/>}/>
+          <Route path="/search" element={<UserSearch/>}/>
           <Route 
             path="/editor" 
             element={
@@ -50,6 +55,23 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+           path="/profile/edit"
+           element={
+    <PrivateRoute name={name}>
+      <Profile />
+    </PrivateRoute>
+  }
+/>
+<Route
+  path="/profile/:id"
+  element={
+    <PrivateRoute name={name}>
+      <ProfilePage />
+    </PrivateRoute>
+  }
+/>
+                    
           <Route
             path="/admin"
             element={

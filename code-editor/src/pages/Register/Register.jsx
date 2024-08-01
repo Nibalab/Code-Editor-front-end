@@ -1,28 +1,35 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Register.css';  // Import the CSS file
+import './Register.css';
 
 const Register = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [redirect, setRedirect] = useState(false);
 
     const submit = async (e) => {
         e.preventDefault();
 
-        await fetch('http://localhost:8000/api/register', {
+        const response = await fetch('http://localhost:8000/api/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 name,
                 email,
-                password
+                password,
+                password_confirmation: passwordConfirmation,
             })
         });
 
-        setRedirect(true);
+        if (response.status === 201) {
+            setRedirect(true);
+        } else {
+            const content = await response.json();
+            console.error('Registration failed:', content);
+        }
     }
 
     if (redirect) {
@@ -55,6 +62,14 @@ const Register = () => {
                     placeholder="Password" 
                     required
                     onChange={e => setPassword(e.target.value)}
+                />
+
+                <input 
+                    type="password" 
+                    className="form-control" 
+                    placeholder="Confirm Password" 
+                    required
+                    onChange={e => setPasswordConfirmation(e.target.value)}
                 />
 
                 <button className="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
