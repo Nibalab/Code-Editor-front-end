@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { marked } from "marked";
+import "./NonEditableProfile.css";
 
 const NonProfile = ({ profile }) => {
   const [readmeContent, setReadmeContent] = useState("");
@@ -12,9 +13,9 @@ const NonProfile = ({ profile }) => {
     if (profile && profile.user_id) {
       console.log('Profile ID:', profile.user_id);
 
-      const fetchReadme = async () => {
+      const fetchReadme = async (user_id) => {
         try {
-          const response = await axios.get("http://localhost:8000/api/profile/readme", { withCredentials: true });
+          const response = await axios.get(`http://localhost:8000/api/profile/${user_id}/readme`, { withCredentials: true });
           if (response.status === 200) {
             setReadmeContent(response.data.readme_content || "");
           } else {
@@ -48,7 +49,7 @@ const NonProfile = ({ profile }) => {
         }
       };
 
-      fetchReadme();
+      fetchReadme(profile.user_id);
       fetchCodes();
     } else {
       console.error('Profile or profile.user_id is missing.');
@@ -91,8 +92,7 @@ const NonProfile = ({ profile }) => {
   if (errorCodes) return <p>{errorCodes}</p>;
 
   return (
-    <div className="profile-container">
-      <h1>Profile</h1>
+    
       <div className="profile-details">
         <div className="profile-info">
           <p>Name: {profile.name}</p>
@@ -101,10 +101,10 @@ const NonProfile = ({ profile }) => {
         </div>
         <div className="profile-readme">
           {readmeContent && (
-            <div>
-              <h2>README.md Content</h2>
+            
+             
               <div dangerouslySetInnerHTML={renderMarkdown(readmeContent)} />
-            </div>
+            
           )}
         </div>
         <div className="profile-codes">
@@ -125,7 +125,7 @@ const NonProfile = ({ profile }) => {
           )}
         </div>
       </div>
-    </div>
+
   );
 };
 
